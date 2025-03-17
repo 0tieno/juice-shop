@@ -1,0 +1,35 @@
+name: CodeQL Analysis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 12 * * 1'  # Runs every Monday at 12 PM UTC
+
+permissions:
+  security-events: write
+
+jobs:
+  analyze:
+    name: CodeQL Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript  # Change based on your project (e.g., python, java, go)
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript"  # Adjust based on the language
+
+      - name: Fail if vulnerabilities exist
+        if: failure()
+        run: exit 1
