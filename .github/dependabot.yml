@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"  # Change to pip, maven, etc., based on your tech stack
+    directory: "/" 
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "lodash"
+        versions: [">=4.17.21"]
